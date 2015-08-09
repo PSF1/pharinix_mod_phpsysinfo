@@ -1,6 +1,6 @@
 # pharinix_mod_phpsysinfo
 
-Port of PHPSysInfo to Pharinix.
+Port of PHPSysInfo v 3.2.2 to Pharinix.
 
 Original project:
 
@@ -14,3 +14,8 @@ Thanks to:
 * Copyright (c), 2007-2015, Erkan Valentin
 * Copyright (c), 2009-2015, Mieczyslaw Nalewaj (namiltd@users.sf.net)
 * Copyright (c), 2010-2012, Damien Roth (iysaak@users.sf.net)
+
+
+Pharinix project:
+
+https://github.com/PSF1/pharinix
