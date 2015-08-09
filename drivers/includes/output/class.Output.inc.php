@@ -39,7 +39,9 @@ abstract class Output
     {
         $this->error = Error::singleton();
         $this->_checkConfig();
-        CommonFunctions::checkForExtensions();
+        if (!$this->error->errorsExist()) {
+            CommonFunctions::checkForExtensions(array(), $this->error);
+        }
 //        $this->error = Error::singleton();
 //        $this->_checkConfig();
     }
@@ -53,8 +55,8 @@ abstract class Output
     {
         include_once APP_ROOT.'/read_config.php';
 
-        if ($this->error->errorsExist()) {
-            $this->error->errorsAsXML();
-        }
+//        if ($this->error->errorsExist()) {
+//            $this->error->errorsAsXML();
+//        }
     }
 }

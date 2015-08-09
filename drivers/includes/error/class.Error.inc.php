@@ -150,6 +150,10 @@ class Error
         $this->_arrErrorList[$index]['message'] = $strMessage;
     }
 
+    public function errorsAsArray() {
+        return $this->_arrErrorList;
+    }
+    
     /**
      * converts the internal error and warning list to a XML file
      *

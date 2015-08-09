@@ -127,7 +127,8 @@ class WebpageXML extends Output implements PSI_Interface_Output
 
             // if there are errors stop executing the script until they are fixed
             if ($this->error->errorsExist()) {
-                $this->error->errorsAsXML();
+                return;
+//                $this->error->errorsAsXML();
             }
         }
 
@@ -175,15 +176,25 @@ class WebpageXML extends Output implements PSI_Interface_Output
     public function __construct($completeXML, $plugin = null)
     {
         parent::__construct();
-        if ($completeXML) {
-            $this->_completeXML = true;
-        }
-        if ($plugin) {
-            if (in_array(strtolower($plugin), CommonFunctions::getPlugins())) {
-                $this->_pluginName = $plugin;
-                $this->_pluginRequest = true;
+        if (!$this->existError()) {
+            if ($completeXML) {
+                $this->_completeXML = true;
             }
+            if ($plugin) {
+                if (in_array(strtolower($plugin), CommonFunctions::getPlugins())) {
+                    $this->_pluginName = $plugin;
+                    $this->_pluginRequest = true;
+                }
+            }
+            $this->_prepare();
         }
-        $this->_prepare();
+    }
+    
+    public function existError() {
+        return $this->error->errorsExist();
+    }
+    
+    public function getErrorArray() {
+        return $this->error->errorsAsArray();
     }
 }

@@ -399,10 +399,11 @@ class CommonFunctions
      * See bug #1787137
      *
      * @param array $arrExt additional extensions for which a check should run
+     * @param Error $err Error object
      *
      * @return void
      */
-    public static function checkForExtensions($arrExt = array())
+    public static function checkForExtensions($arrExt = array(), $err = null)
     {
         if ((strcasecmp(PSI_SYSTEM_CODEPAGE, "UTF-8") == 0) || (strcasecmp(PSI_SYSTEM_CODEPAGE, "CP437") == 0))
             $arrReq = array('simplexml', 'pcre', 'xml', 'dom');
@@ -418,6 +419,9 @@ class CommonFunctions
         $text .= "  <Error>\n";
         foreach ($extensions as $extension) {
             if (!extension_loaded($extension)) {
+                if ($err != null) {
+                    $err->addError('checkForExtensions', "phpSysInfo requires the ".$extension." extension to php in order to work properly.");
+                }
                 $text .= "    <Function>checkForExtensions</Function>\n";
                 $text .= "    <Message>phpSysInfo requires the ".$extension." extension to php in order to work properly.</Message>\n";
                 $error = true;
@@ -425,10 +429,12 @@ class CommonFunctions
         }
         $text .= "  </Error>\n";
         $text .= "</phpsysinfo>";
-        if ($error) {
-            header("Content-Type: text/xml\n\n");
-            echo $text;
-            die();
+        if ($err == null) {
+            if ($error) {
+                header("Content-Type: text/xml\n\n");
+                echo $text;
+                die();
+            }
         }
     }
 
