@@ -51,7 +51,7 @@ function __autoload($class_name)
     $error = Error::singleton();
 
     $error->addError("_autoload(\"".$class_name."\")", "autoloading of class file (class.".$class_name.".inc.php) failed!");
-    $error->errorsAsXML();
+    //$error->errorsAsXML();
 }
 
 /**
