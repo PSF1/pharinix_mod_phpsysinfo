@@ -35,6 +35,7 @@ if (!class_exists("commandPSIInfo")) {
         public static function runMe(&$params, $debug = true) {
             $params = array_merge(array(
                 'plugin' => '',
+                'filters' => '',
             ), $params);
             header('Access-Control-Allow-Origin: *');
              /**
@@ -65,20 +66,30 @@ if (!class_exists("commandPSIInfo")) {
             if ($params['plugin'] != '') {
                 $plugin = basename(htmlspecialchars($params['plugin']));
                 if ($plugin == "complete") {
-                    $output = new WebpageXML(true, null);
+                    $output = new WebpageStdClass(true, null);
                 } elseif ($plugin != "") {
-                    $output = new WebpageXML(false, $plugin);
+                    $output = new WebpageStdClass(false, $plugin);
                 } else {
                     unset($output);
                 }
             } else {
-                $output = new WebpageXML(false, null);
+                $output = new WebpageStdClass(false, null);
             }
             if (!$output->existError()) {
-                include_once 'usr/xml2array/xml2array.php';
-                $respXML = $output->getXMLString();
-                $resp = xml_string_to_array($respXML);
-                return $resp;
+//                include_once 'usr/xml2array/xml2array.php';
+//                $respXML = $output->getXMLString();
+//                $resp = xml_string_to_array($respXML);
+//                return $resp;
+                $filters = null;
+                if ($params['filters'] != '') {
+                    $filters = new stdClass();
+                    $aFilters = explode(",", $params['filters']);
+                    foreach($aFilters as $filter) {
+                        $filter = trim($filter);
+                        $filters->$filter = true;
+                    }
+                }
+                return array('data' => $output->getObject($filters));
             } else {
                 return array('errors' => $output->getErrorArray());
             }
@@ -91,6 +102,7 @@ if (!class_exists("commandPSIInfo")) {
                 "description" => "Retrieve system information. If phpSysInfo get on error then return a array in 'errors'.", 
                 "parameters" => array(
                         "plugin" => "Plugin to use. See '".$path."drivers/phpsysinfo.ini'",
+                        "filters" => "Comma separated list of sections to show or not. To show all sections set to '', empty (default). In case-sensitive each section name can be: Vitals, Network, Hardware, Memory, Filesystems, Mbinfo, Upsinfo.'",
                     ), 
                 "response" => array(
                         "errors" => "List of errors.",
@@ -98,6 +110,7 @@ if (!class_exists("commandPSIInfo")) {
                 "type" => array(
                     "parameters" => array(
                         "plugin" => "string",
+                        "filters" => "string",
                     ), 
                     "response" => array(
                         "errors" => "array",
