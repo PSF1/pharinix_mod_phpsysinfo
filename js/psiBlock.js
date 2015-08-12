@@ -19,6 +19,7 @@
 
 var cpuChart = null, cpuSerie = [];
 var ramChart = null, ramSerie = [];
+var swapChart = null, swapSerie = [];
 $(document).ready(function(){
     var query = {
         command: 'psiInfo',
@@ -48,7 +49,18 @@ $(document).ready(function(){
             html += '</div>';
             html += '<div class="row">';
             html += '<div id="chart-cpu" class="col-md-6" style="height: 250px;"></div>';
-            html += '<div id="chart-ram" class="col-md-6" style="height: 250px;"></div>';
+            html += '<div class="col-md-4">'
+            html += '<h5>RAM: '+formatBytes(e.data.Memory.Total)+'</h5>';
+            html += '<div id="chart-ram" style="height: 200px;"></div>';
+            html += '</div>';
+            html += '<div class="col-md-2">'
+            var swapTotal = 0;
+            if (e.data.Memory.Swap) {
+                swapTotal = e.data.Memory.Swap.Total;
+            }
+            html += '<h5>SWAP: '+formatBytes(swapTotal)+'</h5>';
+            html += '<div id="chart-swap" style="height: 150px;"></div>';
+            html += '</div>';
             html += '</div>';
             html += '<div id="chart-cpu-exist"></div>';
             $('#psiBlock').html(html);
@@ -74,8 +86,24 @@ $(document).ready(function(){
                     {label: "Free", value: e.data.Memory.Free},
                     {label: "Used", value: e.data.Memory.Used},
                 ],
+                formatter: function (x, data) { 
+                    return formatBytes(x); 
+                },
             };
             ramChart = Morris.Donut(ramSerie);
+            if (e.data.Memory.Swap) {
+                swapSerie = {
+                    element: 'chart-swap',
+                    data: [
+                        {label: "Free", value: e.data.Memory.Swap.Free},
+                        {label: "Used", value: e.data.Memory.Swap.Used},
+                    ],
+                    formatter: function (x, data) { 
+                        return formatBytes(x); 
+                    },
+                };
+                swapChart = Morris.Donut(swapSerie);
+            }
             setTimeout(nextStep, 2000);
         }
     },function(){ // onFail
@@ -109,6 +137,16 @@ function nextStep() {
                 ],
             };
             ramChart.setData(ramSerie.data);
+            if (e.data.Memory.Swap) {
+                swapSerie = {
+                    element: 'chart-swap',
+                    data: [
+                        {label: "Free", value: e.data.Memory.Swap.Free},
+                        {label: "Used", value: e.data.Memory.Swap.Used},
+                    ],
+                };
+                swapChart.setData(swapSerie.data);
+            }
             setTimeout(nextStep, 2000);
         });
     }

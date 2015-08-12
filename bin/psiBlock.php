@@ -48,7 +48,17 @@ if (!class_exists("commandPSIBlock")) {
             ));
             $path = $path['path'];
             echo '<script src="'.CMS_DEFAULT_URL_BASE.$path.'js/psiBlock.js" type="text/javascript"></script>';
-            echo '<div id="psiBlock">...</div>';
+            
+            echo '<div class="row">';
+            echo '<div class="col-md-12">';
+            echo '<legend>Server status</legend>';
+            echo '<div id="psiBlock">Please wait</div>';
+            echo '<h6>';
+            echo '<a href="http://phpsysinfo.github.io/phpsysinfo/" target="_blank">phpSysInfo project</a> · ';
+            echo '<a href="https://github.com/PSF1/pharinix_mod_phpsysinfo" target="_blank">Pharinix phpSysInfo module</a>';
+            echo '</h6>';
+            echo '</div>';
+            echo '</div>';
         }
 
         public static function getHelp() {
