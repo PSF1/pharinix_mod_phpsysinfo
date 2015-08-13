@@ -13,7 +13,7 @@
  * @link      http://phpsysinfo.sourceforge.net
  */
 
-error_reporting(E_ALL | E_STRICT);
+//error_reporting(E_ALL | E_STRICT);
 
 /**
  * automatic loading classes when using them
@@ -22,7 +22,7 @@ error_reporting(E_ALL | E_STRICT);
  *
  * @return void
  */
-function __autoload($class_name)
+spl_autoload_register(function ($class_name)
 {
     //$class_name = str_replace('-', '', $class_name);
 
@@ -53,6 +53,7 @@ function __autoload($class_name)
     $error->addError("_autoload(\"".$class_name."\")", "autoloading of class file (class.".$class_name.".inc.php) failed!");
     //$error->errorsAsXML();
 }
+);
 
 /**
  * sets a user-defined error handler function
@@ -64,10 +65,10 @@ function __autoload($class_name)
  *
  * @return void
  */
-function errorHandlerPsi($level, $message, $file, $line)
-{
-    $error = Error::singleton();
-    $error->addPhpError("errorHandlerPsi : ", "Level : ".$level." Message : ".$message." File : ".$file." Line : ".$line);
-}
-
-set_error_handler('errorHandlerPsi');
+//function errorHandlerPsi($level, $message, $file, $line)
+//{
+//    $error = Error::singleton();
+//    $error->addPhpError("errorHandlerPsi : ", "Level : ".$level." Message : ".$message." File : ".$file." Line : ".$line);
+//}
+//
+//set_error_handler('errorHandlerPsi');
