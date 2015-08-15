@@ -48,7 +48,7 @@ if (!class_exists("commandPSIInfo")) {
             ));
             $path = $path['path'];
             if ($path == '') {
-                return array('ok' => false, 'msg' => 'Uh!! What??');
+                return array('ok' => false, 'msg' => __('Uh!! What??'));
             }
             if (!defined('APP_ROOT')) define('APP_ROOT', $path.'drivers/');
 
@@ -97,15 +97,15 @@ if (!class_exists("commandPSIInfo")) {
 
         public static function getHelp() {
             $path = driverCommand::run('modGetPath', array('name' => 'phpsysinfo'));
-            $path = $path['path'];
+            $path = $path['path'].'drivers/phpsysinfo.ini';
             return array(
-                "description" => "Retrieve system information. If phpSysInfo get on error then return a array in 'errors'.", 
+                "description" => __("Retrieve system information. If phpSysInfo get on error then return a array in 'errors'."), 
                 "parameters" => array(
-                        "plugin" => "Plugin to use. See '".$path."drivers/phpsysinfo.ini'",
-                        "filters" => "Comma separated list of sections to show or not. To show all sections set to '', empty (default). In case-sensitive each section name can be: Vitals, Network, Hardware, Memory, Filesystems, Mbinfo, Upsinfo.'",
+                        "plugin" => sprintf(__("Plugin to use. See '%s'"), $path),
+                        "filters" => __("Comma separated list of sections to show or not. To show all sections set to '', empty (default). In case-sensitive each section name can be: Vitals, Network, Hardware, Memory, Filesystems, Mbinfo, Upsinfo.'"),
                     ), 
                 "response" => array(
-                        "errors" => "List of errors.",
+                        "errors" => __("List of errors."),
                     ),
                 "type" => array(
                     "parameters" => array(

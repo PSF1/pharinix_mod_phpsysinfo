@@ -38,7 +38,7 @@ if (!class_exists("commandPSIBlock")) {
             ));
             $path = $path['path'];
             if ($path == '') {
-                return array('ok' => false, 'msg' => "Module 'raphael_js' is required.");
+                return array('ok' => false, 'msg' => __("Module 'raphael_js' is required."));
             }
             echo '<link href="'.CMS_DEFAULT_URL_BASE.$path.'morrisjs/morris.css" rel="stylesheet">';
             echo '<script src="'.CMS_DEFAULT_URL_BASE.$path.'raphael-min.js" type="text/javascript"></script>';
@@ -51,11 +51,11 @@ if (!class_exists("commandPSIBlock")) {
             
             echo '<div class="row">';
             echo '<div class="col-md-12">';
-            echo '<legend>Server status</legend>';
-            echo '<div id="psiBlock">Please wait</div>';
+            echo '<legend>'.__('Server status').'</legend>';
+            echo '<div id="psiBlock">'.__('Please wait').'</div>';
             echo '<h6>';
-            echo '<a href="http://phpsysinfo.github.io/phpsysinfo/" target="_blank">phpSysInfo project</a> · ';
-            echo '<a href="https://github.com/PSF1/pharinix_mod_phpsysinfo" target="_blank">Pharinix phpSysInfo module</a>';
+            echo '<a href="http://phpsysinfo.github.io/phpsysinfo/" target="_blank">'.__('phpSysInfo project').'</a> · ';
+            echo '<a href="https://github.com/PSF1/pharinix_mod_phpsysinfo" target="_blank">'.__('Pharinix phpSysInfo module').'</a>';
             echo '</h6>';
             echo '</div>';
             echo '</div>';
@@ -65,7 +65,7 @@ if (!class_exists("commandPSIBlock")) {
             $path = driverCommand::run('modGetPath', array('name' => 'phpsysinfo'));
             $path = $path['path'];
             return array(
-                "description" => "Display server information how HTML.", 
+                "description" => __("Display server information how HTML."), 
                 "parameters" => array(), 
                 "response" => array(),
                 "type" => array(

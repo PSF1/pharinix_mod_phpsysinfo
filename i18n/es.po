@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: phpsysinfo/1.0\n"
+"Report-Msgid-Bugs-To: aaaaa976@gmail.com\n"
+"Last-Translator: Pedro Pelaez <aaaaa976@gmail.com>\n"
+"Language-Team: Pharinix\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2015-08-15T16:06:14+02:00\n"
+"PO-Revision-Date: 2015-08-15 16:13+0100\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.7.6\n"
+
+#: usr/phpsysinfo/bin/psiBlock.php:41
+msgid "Module 'raphael_js' is required."
+msgstr "Se requiere el modulo 'raphael_js'"
+
+#: usr/phpsysinfo/bin/psiBlock.php:54
+msgid "Server status"
+msgstr "Estado del servidor"
+
+#: usr/phpsysinfo/bin/psiBlock.php:55
+msgid "Please wait"
+msgstr "Por favor, espere"
+
+#: usr/phpsysinfo/bin/psiBlock.php:57
+msgid "phpSysInfo project"
+msgstr "Proyecto phpSysInfo"
+
+#: usr/phpsysinfo/bin/psiBlock.php:58
+msgid "Pharinix phpSysInfo module"
+msgstr "Modulo phpSysInfo para Pharinix"
+
+#: usr/phpsysinfo/bin/psiBlock.php:68
+msgid "Display server information how HTML."
+msgstr "Muestra información sobre el servidor como HTML."
+
+#: usr/phpsysinfo/bin/psiGetIcon.php:47
+msgid "System icon not found."
+msgstr "Icono de sistema no encontrado,"
+
+#: usr/phpsysinfo/bin/psiGetIcon.php:61
+msgid "Download a system icon."
+msgstr "Descargar un icono de sistema."
+
+#: usr/phpsysinfo/bin/psiGetIcon.php:63
+msgid "PNG system icon to download."
+msgstr "Icono del sistema en PNG a descargar."
+
+#: usr/phpsysinfo/bin/psiInfo.php:51
+msgid "Uh!! What??"
+msgstr "eh!! qué??"
+
+#: usr/phpsysinfo/bin/psiInfo.php:102
+msgid "Retrieve system information. If phpSysInfo get on error then return a array in 'errors'."
+msgstr "Recupera información del sistema. Si phpSysInfo genera un error entonces se devuelve un array en 'errors'."
+
+#: usr/phpsysinfo/bin/psiInfo.php:104
+msgid "Plugin to use. See '%s'"
+msgstr "Plugin a usar. Ver '%s'"
+
+#: usr/phpsysinfo/bin/psiInfo.php:105
+msgid "Comma separated list of sections to show or not. To show all sections set to '', empty (default). In case-sensitive each section name can be: Vitals, Network, Hardware, Memory, Filesystems, Mbinfo, Upsinfo.'"
+msgstr "Lista separada por comas de secciones a mostrar o no. Para mostrar todas las secciones pasar '', vacio (por defecto). Cada nombre de sección, sensible a mayusculas, puede ser: Vitals, Network, Hardware, Memory, Filesystems, Mbinfo, Upsinfo.'"
+
+#: usr/phpsysinfo/bin/psiInfo.php:108
+msgid "List of errors."
+msgstr "Lista de errores."

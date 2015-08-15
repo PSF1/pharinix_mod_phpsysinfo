@@ -44,7 +44,7 @@ if (!class_exists("commandPSIGetIcon")) {
             $params["file"] = str_replace('..', '', $params["file"]);
             $filename = $path.'drivers/gfx/images/'.$params["file"];
             if (!is_file($filename)) { 
-                return array('ok' => false, 'msg' => 'System icon not found.');
+                return array('ok' => false, 'msg' => __('System icon not found.'));
             }
 
             header("Content-type: image/png");
@@ -58,9 +58,9 @@ if (!class_exists("commandPSIGetIcon")) {
             $path = driverCommand::run('modGetPath', array('name' => 'phpsysinfo'));
             $path = $path['path'];
             return array(
-                "description" => "Download a system icon.", 
+                "description" => __("Download a system icon."), 
                 "parameters" => array(
-                        "file" => "PNG system icon to download.",
+                        "file" => __("PNG system icon to download."),
                     ), 
                 "response" => array(),
                 "type" => array(
