@@ -99,6 +99,7 @@ if (!class_exists("commandPSIInfo")) {
             $path = driverCommand::run('modGetPath', array('name' => 'phpsysinfo'));
             $path = $path['path'].'drivers/phpsysinfo.ini';
             return array(
+                "package" => 'phpsysinfo',
                 "description" => __("Retrieve system information. If phpSysInfo get on error then return a array in 'errors'."), 
                 "parameters" => array(
                         "plugin" => sprintf(__("Plugin to use. See '%s'"), $path),

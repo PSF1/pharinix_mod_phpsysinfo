@@ -58,6 +58,7 @@ if (!class_exists("commandPSIGetIcon")) {
             $path = driverCommand::run('modGetPath', array('name' => 'phpsysinfo'));
             $path = $path['path'];
             return array(
+                "package" => 'phpsysinfo',
                 "description" => __("Download a system icon."), 
                 "parameters" => array(
                         "file" => __("PNG system icon to download."),

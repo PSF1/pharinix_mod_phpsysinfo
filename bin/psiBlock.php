@@ -65,6 +65,7 @@ if (!class_exists("commandPSIBlock")) {
             $path = driverCommand::run('modGetPath', array('name' => 'phpsysinfo'));
             $path = $path['path'];
             return array(
+                "package" => 'phpsysinfo',
                 "description" => __("Display server information how HTML."), 
                 "parameters" => array(), 
                 "response" => array(),
