@@ -233,6 +233,8 @@ class Error
             if ($val == $arrTrace[count($arrTrace) - 1]) {
                 break;
             }
+            if(!isset($val['file'])) $val['file'] = '';
+            if(!isset($val['line'])) $val['line'] = '';
             $strBacktrace .= str_replace(APP_ROOT, ".", $val['file']).' on line '.$val['line'];
             if ($strFunc) {
                 $strBacktrace .= ' in function '.$strFunc;
