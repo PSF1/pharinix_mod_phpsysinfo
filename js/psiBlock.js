@@ -44,13 +44,13 @@ $(document).ready(function(){
             html += e.data.Vitals.Distro+' - '+e.data.Vitals.Kernel;
             html += '</h6>';
             html += '<div class="row">';
-            html += '<div class="col-md-6"><h3>CPU load</h3></div>';
-            html += '<div class="col-md-6"><h3>Memory usage</h3></div>';
+            html += '<div class="col-md-6"><h3>'+__('CPU load')+'</h3></div>';
+            html += '<div class="col-md-6"><h3>'+__('Memory usage')+'</h3></div>';
             html += '</div>';
             html += '<div class="row">';
             html += '<div id="chart-cpu" class="col-md-6" style="height: 250px;"></div>';
             html += '<div class="col-md-4">'
-            html += '<h5>RAM: '+formatBytes(e.data.Memory.Total)+'</h5>';
+            html += '<h5>'+__('RAM')+': '+formatBytes(e.data.Memory.Total)+'</h5>';
             html += '<div id="chart-ram" style="height: 200px;"></div>';
             html += '</div>';
             html += '<div class="col-md-2">'
@@ -58,7 +58,7 @@ $(document).ready(function(){
             if (e.data.Memory.Swap) {
                 swapTotal = e.data.Memory.Swap.Total;
             }
-            html += '<h5>SWAP: '+formatBytes(swapTotal)+'</h5>';
+            html += '<h5>'+__('SWAP')+': '+formatBytes(swapTotal)+'</h5>';
             html += '<div id="chart-swap" style="height: 150px;"></div>';
             html += '</div>';
             html += '</div>';
@@ -74,7 +74,7 @@ $(document).ready(function(){
                 }],
                 xkey: 'period',
                 ykeys: ['load'],
-                labels: ['CPU load'],
+                labels: [__('CPU load')],
                 pointSize: 2,
                 hideHover: 'auto',
                 resize: true
@@ -83,8 +83,8 @@ $(document).ready(function(){
             ramSerie = {
                 element: 'chart-ram',
                 data: [
-                    {label: "Free", value: e.data.Memory.Free},
-                    {label: "Used", value: e.data.Memory.Used},
+                    {label: __("Free"), value: e.data.Memory.Free},
+                    {label: __("Used"), value: e.data.Memory.Used},
                 ],
                 formatter: function (x, data) { 
                     return formatBytes(x); 
@@ -95,8 +95,8 @@ $(document).ready(function(){
                 swapSerie = {
                     element: 'chart-swap',
                     data: [
-                        {label: "Free", value: e.data.Memory.Swap.Free},
-                        {label: "Used", value: e.data.Memory.Swap.Used},
+                        {label: __("Free"), value: e.data.Memory.Swap.Free},
+                        {label: __("Used"), value: e.data.Memory.Swap.Used},
                     ],
                     formatter: function (x, data) { 
                         return formatBytes(x); 
@@ -107,7 +107,7 @@ $(document).ready(function(){
             setTimeout(nextStep, 2000);
         }
     },function(){ // onFail
-        $('#psiBlock').html('Connection error.');
+        $('#psiBlock').html(__('Connection error.'));
     })
 });
 
@@ -132,8 +132,8 @@ function nextStep() {
             ramSerie = {
                 element: 'chart-ram',
                 data: [
-                    {label: "Free", value: e.data.Memory.Free},
-                    {label: "Used", value: e.data.Memory.Used},
+                    {label: __("Free"), value: e.data.Memory.Free},
+                    {label: __("Used"), value: e.data.Memory.Used},
                 ],
             };
             ramChart.setData(ramSerie.data);
@@ -141,8 +141,8 @@ function nextStep() {
                 swapSerie = {
                     element: 'chart-swap',
                     data: [
-                        {label: "Free", value: e.data.Memory.Swap.Free},
-                        {label: "Used", value: e.data.Memory.Swap.Used},
+                        {label: __("Free"), value: e.data.Memory.Swap.Free},
+                        {label: __("Used"), value: e.data.Memory.Swap.Used},
                     ],
                 };
                 swapChart.setData(swapSerie.data);

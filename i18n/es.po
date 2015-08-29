@@ -7,11 +7,41 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2015-08-15T16:06:14+02:00\n"
-"PO-Revision-Date: 2015-08-15 16:13+0100\n"
+"POT-Creation-Date: 2015-08-30T01:24:40+02:00\n"
+"PO-Revision-Date: 2015-08-30 01:27+0100\n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 1.7.6\n"
+
+#: usr/phpsysinfo/js/psiBlock.js:47 usr/phpsysinfo/js/psiBlock.js:77
+msgid "CPU load"
+msgstr "Carga CPU"
+
+#: usr/phpsysinfo/js/psiBlock.js:48
+msgid "Memory usage"
+msgstr "Uso de memoria"
+
+#: usr/phpsysinfo/js/psiBlock.js:53
+msgid "RAM"
+msgstr "RAM"
+
+#: usr/phpsysinfo/js/psiBlock.js:61
+msgid "SWAP"
+msgstr "Intercambio"
+
+#: usr/phpsysinfo/js/psiBlock.js:86 usr/phpsysinfo/js/psiBlock.js:98
+#: usr/phpsysinfo/js/psiBlock.js:135 usr/phpsysinfo/js/psiBlock.js:144
+msgid "Free"
+msgstr "Libre"
+
+#: usr/phpsysinfo/js/psiBlock.js:87 usr/phpsysinfo/js/psiBlock.js:99
+#: usr/phpsysinfo/js/psiBlock.js:136 usr/phpsysinfo/js/psiBlock.js:145
+msgid "Used"
+msgstr "Usada"
+
+#: usr/phpsysinfo/js/psiBlock.js:110
+msgid "Connection error."
+msgstr "Error de conexión."
 
 #: usr/phpsysinfo/bin/psiBlock.php:41
 msgid "Module 'raphael_js' is required."
@@ -33,7 +63,7 @@ msgstr "Proyecto phpSysInfo"
 msgid "Pharinix phpSysInfo module"
 msgstr "Modulo phpSysInfo para Pharinix"
 
-#: usr/phpsysinfo/bin/psiBlock.php:68
+#: usr/phpsysinfo/bin/psiBlock.php:69 usr/phpsysinfo/bin/psiBlock.php:68
 msgid "Display server information how HTML."
 msgstr "Muestra información sobre el servidor como HTML."
 
@@ -41,11 +71,11 @@ msgstr "Muestra información sobre el servidor como HTML."
 msgid "System icon not found."
 msgstr "Icono de sistema no encontrado,"
 
-#: usr/phpsysinfo/bin/psiGetIcon.php:61
+#: usr/phpsysinfo/bin/psiGetIcon.php:62 usr/phpsysinfo/bin/psiGetIcon.php:61
 msgid "Download a system icon."
 msgstr "Descargar un icono de sistema."
 
-#: usr/phpsysinfo/bin/psiGetIcon.php:63
+#: usr/phpsysinfo/bin/psiGetIcon.php:64 usr/phpsysinfo/bin/psiGetIcon.php:63
 msgid "PNG system icon to download."
 msgstr "Icono del sistema en PNG a descargar."
 
@@ -53,18 +83,18 @@ msgstr "Icono del sistema en PNG a descargar."
 msgid "Uh!! What??"
 msgstr "eh!! qué??"
 
-#: usr/phpsysinfo/bin/psiInfo.php:102
+#: usr/phpsysinfo/bin/psiInfo.php:103 usr/phpsysinfo/bin/psiInfo.php:102
 msgid "Retrieve system information. If phpSysInfo get on error then return a array in 'errors'."
 msgstr "Recupera información del sistema. Si phpSysInfo genera un error entonces se devuelve un array en 'errors'."
 
-#: usr/phpsysinfo/bin/psiInfo.php:104
+#: usr/phpsysinfo/bin/psiInfo.php:105 usr/phpsysinfo/bin/psiInfo.php:104
 msgid "Plugin to use. See '%s'"
 msgstr "Plugin a usar. Ver '%s'"
 
-#: usr/phpsysinfo/bin/psiInfo.php:105
+#: usr/phpsysinfo/bin/psiInfo.php:106 usr/phpsysinfo/bin/psiInfo.php:105
 msgid "Comma separated list of sections to show or not. To show all sections set to '', empty (default). In case-sensitive each section name can be: Vitals, Network, Hardware, Memory, Filesystems, Mbinfo, Upsinfo.'"
 msgstr "Lista separada por comas de secciones a mostrar o no. Para mostrar todas las secciones pasar '', vacio (por defecto). Cada nombre de sección, sensible a mayusculas, puede ser: Vitals, Network, Hardware, Memory, Filesystems, Mbinfo, Upsinfo.'"
 
-#: usr/phpsysinfo/bin/psiInfo.php:108
+#: usr/phpsysinfo/bin/psiInfo.php:109 usr/phpsysinfo/bin/psiInfo.php:108
 msgid "List of errors."
 msgstr "Lista de errores."
