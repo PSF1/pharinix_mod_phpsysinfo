@@ -20,6 +20,7 @@
 var cpuChart = null, cpuSerie = [];
 var ramChart = null, ramSerie = [];
 var swapChart = null, swapSerie = [];
+var remotes = [];
 $(document).ready(function(){
     var query = {
         command: 'psiInfo',
@@ -104,12 +105,60 @@ $(document).ready(function(){
                 };
                 swapChart = Morris.Donut(swapSerie);
             }
+            var remoteList = '';
+            remoteList += '<tr id="psihost_local">';
+            var swap_used = 0, swap_total = 0;
+            if (e.data.Memory.Swap) {
+                swap_used = e.data.Memory.Swap.Used;
+                swap_total = e.data.Memory.Swap.Total;
+            }
+            remoteList += getHostStatus('success', 'localhost', e.data.Vitals.LoadAvg, e.data.Memory.Used, e.data.Memory.Total, swap_used, swap_total);
+            remoteList += '</tr>';
+            $('#psiRemotes').html(remoteList);
             setTimeout(nextStep, 2000);
+            // Load remote hosts
+            var queryHosts = {
+                command: 'getNodes',
+                interface: 'echoJson',
+                nodetype: 'psihost',
+            };
+            apiCall(queryHosts, function(e){
+                remotes = e;
+                $.each(remotes, function(id, host){
+                    var remoteList = '';
+                    remoteList += '<tr id="psihost_'+id+'">';
+                    remoteList += getHostStatus('warning', host.url, 0, 0, 0, 0, 0);
+                    remoteList += '</tr>';
+                    $('#psiRemotes').append(remoteList);
+                });
+            });
         }
     },function(){ // onFail
         $('#psiBlock').html(__('Connection error.'));
     })
 });
+
+function getHostStatus(status, url, cpu, ram_used, ram_total, swap_used, swap_total) {
+    var remoteList = '<td class="'+status+'">'; // Status
+    remoteList += '</td>';
+    remoteList += '<td>'; // Host
+    if (url == 'localhost') {
+        remoteList += url;
+    } else {
+        remoteList += '<a href="'+url+'" target="_blank">'+url+'</a>';
+    }
+    remoteList += '</td>';
+    remoteList += '<td>'; // CPU
+    remoteList += cpu;
+    remoteList += '</td>';
+    remoteList += '<td>'; // RAM
+    remoteList += formatBytes(ram_used) + ' / ' + formatBytes(ram_total);
+    remoteList += '</td>';
+    remoteList += '<td>'; // SWAP
+    remoteList += formatBytes(swap_used) + ' / ' + formatBytes(swap_total);
+    remoteList += '</td>';
+    return remoteList;
+}
 
 function nextStep() {
     if ($('#chart-cpu-exist')) {
@@ -148,6 +197,43 @@ function nextStep() {
                 swapChart.setData(swapSerie.data);
             }
             setTimeout(nextStep, 2000);
+            // Remotes
+            var remoteList = '';
+            var swap_used = 0, swap_total = 0;
+            if (e.data.Memory.Swap) {
+                swap_used = e.data.Memory.Swap.Used;
+                swap_total = e.data.Memory.Swap.Total;
+            }
+            remoteList += getHostStatus('success', 'localhost', e.data.Vitals.LoadAvg, e.data.Memory.Used, e.data.Memory.Total, swap_used, swap_total);
+            $('#psihost_local').html(remoteList);
+            var queryHosts = {
+                command: 'psiInfo',
+                interface: 'echoJson',
+                filters: 'Vitals,Memory',
+            };
+            $.each(remotes, function(id, host){
+                remoteApiCall(host.url, queryHosts, function(e){
+                    var remoteList = '';
+                    var swap_used = 0, swap_total = 0;
+                    if (e.data.Memory.Swap) {
+                        swap_used = e.data.Memory.Swap.Used;
+                        swap_total = e.data.Memory.Swap.Total;
+                    }
+                    remoteList += getHostStatus('success', host.url, e.data.Vitals.LoadAvg, e.data.Memory.Used, e.data.Memory.Total, swap_used, swap_total);
+                    $('#psihost_'+id).html(remoteList);
+                }, function(status, statusText, body){
+                    var remoteList = '';
+                    var errorMsg = '';
+                    if (status != 0) {
+                        errorMsg = __('Error')+' ' + status + '.';
+                        errorMsg += statusText + '. ' + body;
+                    } else {
+                        errorMsg = __('Connection fail.');
+                    }
+                    remoteList += getHostStatus('danger', host.url, errorMsg, 0, 0, 0, 0);
+                    $('#psihost_'+id).html(remoteList);
+                });
+            });
         });
     }
 }

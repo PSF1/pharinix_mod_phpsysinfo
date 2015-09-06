@@ -2,23 +2,82 @@
     "meta":{
         "name":"phpSysInfo v 3.2.2",
         "slugname":"phpsysinfo",
-        "version": "1.4",
+        "version": "1.5",
         "autor": "Copyright (c), 1999-2008, Uriah Welcome (precision@users.sf.net)\nCopyright (c), 1999-2009, Michael Cramer (bigmichi1@users.sf.net)\nCopyright (c), 2007-2008, Audun Larsen (xqus@users.sf.net)\nCopyright (c), 2007-2015, Erkan Valentin\nCopyright (c), 2009-2015, Mieczyslaw Nalewaj (namiltd@users.sf.net)\nCopyright (c), 2010-2012, Damien Roth (iysaak@users.sf.net)\nPharinix mod Copyright (c), 2015, Pedro Pelaez (aaaaa976@gmail.com)",
         "website": "https://github.com/PSF1/pharinix_mod_phpsysinfo",
         "description": "phpSysInfo: a customizable PHP script that displays information about your system nicely",
         "licence": "GNU GENERAL PUBLIC LICENSE Version 2, June 1991"
     },
-    "configuration": {},
+    "configuration": {
+        "[phpsysinfo]": {
+            "default_group":"'phpsysinfo'"
+        }
+    },
     "booting": [],
     "bin_paths": [
         "bin/"
     ],
-    "nodetypes": {},
+    "nodetypes": {
+        "psihost": {
+            "url":{
+                "type":"string",
+                "iskey":false,
+                "length":0,
+                "required":true,
+                "locked":false,
+                "readOnly":false,
+                "system":false,
+                "multivalued":false,
+                "default":"",
+                "label":"Host",
+                "help":"Pharinix host's url with phpSysInfo installed."
+            },
+            "user":{
+                "type":"string",
+                "iskey":false,
+                "length":0,
+                "required":false,
+                "locked":false,
+                "readOnly":false,
+                "system":false,
+                "multivalued":false,
+                "default":"",
+                "label":"User",
+                "help":"User name that can call commands."
+            },
+            "pass":{
+                "type":"string",
+                "iskey":false,
+                "length":0,
+                "required":false,
+                "locked":false,
+                "readOnly":false,
+                "system":false,
+                "multivalued":false,
+                "default":"",
+                "label":"Password",
+                "help":"User password that can call commands."
+            }
+        }
+    },
     "sql": {},
-    "install": [],
+    "install": [
+        {"addNode":
+            {
+                "nodetype":"group",
+                "title":"phpsysinfo"
+            }
+        },
+        {"delNodeField":
+            {
+                "nodetype":"psihost",
+                "name":"title"
+            }
+        }
+    ],
     "uninstall": [],
     "requirements": {
-        "pharinix": "1.07.x",
+        "pharinix": "1.09.x",
         "raphael_js": "2.1.4"
     },
     "platforms":[

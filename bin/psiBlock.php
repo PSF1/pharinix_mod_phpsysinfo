@@ -51,12 +51,32 @@ if (!class_exists("commandPSIBlock")) {
             
             echo '<div class="row">';
             echo '<div class="col-md-12">';
+            
             echo '<legend>'.__('Server status').'</legend>';
             echo '<div id="psiBlock">'.__('Please wait').'</div>';
             echo '<h6>';
             echo '<a href="http://phpsysinfo.github.io/phpsysinfo/" target="_blank">'.__('phpSysInfo project').'</a> · ';
             echo '<a href="https://github.com/PSF1/pharinix_mod_phpsysinfo" target="_blank">'.__('Pharinix phpSysInfo module').'</a>';
             echo '</h6>';
+            
+            echo '<legend>'.__('Remote servers').'</legend>';
+            echo '<div>';
+            
+            echo '</div>';
+            echo '<table class="table table-striped">';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th>#</th>';
+            echo '<th>'.__('Host').'</th>';
+            echo '<th>'.__('CPU Load').'</th>';
+            echo '<th>'.__('RAM').' - '.__('used').' / '.__('total').'</th>';
+            echo '<th>'.__('SWAP').' - '.__('used').' / '.__('total').'</th>';
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody id="psiRemotes">';
+        
+            echo '</tbody>';
+            echo '</table>';
             echo '</div>';
             echo '</div>';
         }
