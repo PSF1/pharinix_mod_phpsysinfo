@@ -31,19 +31,28 @@ $(document).ready(function(){
             $('#psiBlock').html(e.msg);
         } else {
             var html = '';
-            html += '<h1>'+e.data.Vitals.Hostname+'</h1>';
-            if (e.data.Hardware.Name) {
-                html += '<h2>'+e.data.Hardware.Name+'</h2>';
-            }
-            html += '<ul>';
-            $.each(e.data.Hardware.CPU, function(i, item){
-                html += '<li>'+item.Model+'</li>';
-            });
-            html += '</ul>';
-            html += '<h6>';
-            html += '<img src="'+PHARINIX_ROOT_URL+'?command=psiGetIcon&interface=nothing&file='+e.data.Vitals.Distroicon+'" width="12px"/> ';
-            html += e.data.Vitals.Distro+' - '+e.data.Vitals.Kernel;
-            html += '</h6>';
+            html += '<div class="row">';
+            html += '<div class="col-md-6">';
+                html += '<h1>';
+                html += '<img src="'+PHARINIX_ROOT_URL+'?command=psiGetIcon&interface=nothing&file='+e.data.Vitals.Distroicon+'"/> ';
+                html += e.data.Vitals.Hostname;
+                html += '</h1>';
+                html += '';
+                html += e.data.Vitals.Distro+'<br><h6>'+e.data.Vitals.Kernel;
+                html += '</h6>';
+            html += '</div>';
+            html += '<div class="col-md-6">';
+                if (e.data.Hardware.Name) {
+                    html += '<h2>'+e.data.Hardware.Name+'</h2>';
+                }
+                html += '<ul>';
+                $.each(e.data.Hardware.CPU, function(i, item){
+                    html += '<li>'+item.Model+'</li>';
+                });
+                html += '</ul>';
+            html += '</div>';
+            html += '</div>';
+            
             html += '<div class="row">';
             html += '<div class="col-md-6"><h3>'+__('CPU load')+'</h3></div>';
             html += '<div class="col-md-6"><h3>'+__('Memory usage')+'</h3></div>';

@@ -1,71 +1,139 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: phpsysinfo/1.0\n"
+"Project-Id-Version: phpsysinfo/1.5\n"
 "Report-Msgid-Bugs-To: aaaaa976@gmail.com\n"
 "Last-Translator: Pedro Pelaez <aaaaa976@gmail.com>\n"
 "Language-Team: Pharinix\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2015-08-30T01:24:40+02:00\n"
-"PO-Revision-Date: 2015-08-30 01:27+0100\n"
+"POT-Creation-Date: 2015-09-11T16:44:19+02:00\n"
+"PO-Revision-Date: 2015-09-11 16:50+0100\n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 1.7.6\n"
 
+#: usr/phpsysinfo/js/psiBlock.js:48 usr/phpsysinfo/js/psiBlock.js:78
 #: usr/phpsysinfo/js/psiBlock.js:47 usr/phpsysinfo/js/psiBlock.js:77
 msgid "CPU load"
 msgstr "Carga CPU"
 
-#: usr/phpsysinfo/js/psiBlock.js:48
+#: usr/phpsysinfo/js/psiBlock.js:49 usr/phpsysinfo/js/psiBlock.js:48
 msgid "Memory usage"
 msgstr "Uso de memoria"
 
+#: usr/phpsysinfo/js/psiBlock.js:54 usr/phpsysinfo/bin/psiBlock.php:72
 #: usr/phpsysinfo/js/psiBlock.js:53
 msgid "RAM"
 msgstr "RAM"
 
+#: usr/phpsysinfo/js/psiBlock.js:62 usr/phpsysinfo/bin/psiBlock.php:73
 #: usr/phpsysinfo/js/psiBlock.js:61
 msgid "SWAP"
 msgstr "Intercambio"
 
+#: usr/phpsysinfo/js/psiBlock.js:87 usr/phpsysinfo/js/psiBlock.js:99
+#: usr/phpsysinfo/js/psiBlock.js:184 usr/phpsysinfo/js/psiBlock.js:193
 #: usr/phpsysinfo/js/psiBlock.js:86 usr/phpsysinfo/js/psiBlock.js:98
 #: usr/phpsysinfo/js/psiBlock.js:135 usr/phpsysinfo/js/psiBlock.js:144
 msgid "Free"
 msgstr "Libre"
 
+#: usr/phpsysinfo/js/psiBlock.js:88 usr/phpsysinfo/js/psiBlock.js:100
+#: usr/phpsysinfo/js/psiBlock.js:185 usr/phpsysinfo/js/psiBlock.js:194
 #: usr/phpsysinfo/js/psiBlock.js:87 usr/phpsysinfo/js/psiBlock.js:99
 #: usr/phpsysinfo/js/psiBlock.js:136 usr/phpsysinfo/js/psiBlock.js:145
 msgid "Used"
 msgstr "Usada"
 
-#: usr/phpsysinfo/js/psiBlock.js:110
+#: usr/phpsysinfo/js/psiBlock.js:137 usr/phpsysinfo/js/psiBlock.js:110
 msgid "Connection error."
 msgstr "Error de conexión."
+
+#: usr/phpsysinfo/js/psiBlock.js:228
+msgid "Error"
+msgstr "Error"
+
+#: usr/phpsysinfo/js/psiBlock.js:231
+msgid "Connection fail."
+msgstr "Fallo de conexión."
+
+#: usr/phpsysinfo/bin/psiAddHost.php:43 usr/phpsysinfo/bin/psiDelHost.php:41
+msgid "URL is required."
+msgstr "La URL es necesaria."
+
+#: usr/phpsysinfo/bin/psiAddHost.php:65
+msgid "Add a new Pharinix host to host's list, node type 'psihost'."
+msgstr "Añade un nuevo host de Pharinix a la lista de hosts, tipo de nodo 'psihost'."
+
+#: usr/phpsysinfo/bin/psiAddHost.php:67 usr/phpsysinfo/bin/psiDelHost.php:72
+msgid "Pharinix host's URL."
+msgstr "URL de host de Pharinix."
+
+#: usr/phpsysinfo/bin/psiAddHost.php:68
+msgid "Username."
+msgstr "Usuario."
+
+#: usr/phpsysinfo/bin/psiAddHost.php:69
+msgid "Password."
+msgstr "Clave."
 
 #: usr/phpsysinfo/bin/psiBlock.php:41
 msgid "Module 'raphael_js' is required."
 msgstr "Se requiere el modulo 'raphael_js'"
 
-#: usr/phpsysinfo/bin/psiBlock.php:54
+#: usr/phpsysinfo/bin/psiBlock.php:55 usr/phpsysinfo/bin/psiBlock.php:54
 msgid "Server status"
 msgstr "Estado del servidor"
 
-#: usr/phpsysinfo/bin/psiBlock.php:55
+#: usr/phpsysinfo/bin/psiBlock.php:56 usr/phpsysinfo/bin/psiBlock.php:55
 msgid "Please wait"
 msgstr "Por favor, espere"
 
-#: usr/phpsysinfo/bin/psiBlock.php:57
+#: usr/phpsysinfo/bin/psiBlock.php:58 usr/phpsysinfo/bin/psiBlock.php:57
 msgid "phpSysInfo project"
 msgstr "Proyecto phpSysInfo"
 
-#: usr/phpsysinfo/bin/psiBlock.php:58
+#: usr/phpsysinfo/bin/psiBlock.php:59 usr/phpsysinfo/bin/psiBlock.php:58
 msgid "Pharinix phpSysInfo module"
 msgstr "Modulo phpSysInfo para Pharinix"
 
-#: usr/phpsysinfo/bin/psiBlock.php:69 usr/phpsysinfo/bin/psiBlock.php:68
+#: usr/phpsysinfo/bin/psiBlock.php:62
+msgid "Remote servers"
+msgstr "Servidores remotos"
+
+#: usr/phpsysinfo/bin/psiBlock.php:70 NodeType_psihost:field_url_label
+msgid "Host"
+msgstr "Host"
+
+#: usr/phpsysinfo/bin/psiBlock.php:71
+msgid "CPU Load"
+msgstr "Carga CPU"
+
+#: usr/phpsysinfo/bin/psiBlock.php:72 usr/phpsysinfo/bin/psiBlock.php:73
+msgid "used"
+msgstr "usado"
+
+#: usr/phpsysinfo/bin/psiBlock.php:72 usr/phpsysinfo/bin/psiBlock.php:73
+msgid "total"
+msgstr "total"
+
+#: usr/phpsysinfo/bin/psiBlock.php:89 usr/phpsysinfo/bin/psiBlock.php:69
+#: usr/phpsysinfo/bin/psiBlock.php:68
 msgid "Display server information how HTML."
 msgstr "Muestra información sobre el servidor como HTML."
+
+#: usr/phpsysinfo/bin/psiDelHost.php:70
+msgid "Delete a Pharinix host to host's list."
+msgstr "Borra un host de Pharinix de la lista de hosts."
+
+#: usr/phpsysinfo/bin/psiDelHost.php:75
+msgid "TRUE if ok."
+msgstr "TRUE si ok."
+
+#: usr/phpsysinfo/bin/psiDelHost.php:76
+msgid "Delete node responses."
+msgstr "Borrar respuestas de nodo."
 
 #: usr/phpsysinfo/bin/psiGetIcon.php:47
 msgid "System icon not found."
@@ -98,3 +166,63 @@ msgstr "Lista separada por comas de secciones a mostrar o no. Para mostrar todas
 #: usr/phpsysinfo/bin/psiInfo.php:109 usr/phpsysinfo/bin/psiInfo.php:108
 msgid "List of errors."
 msgstr "Lista de errores."
+
+#: NodeType_psihost:field_pass_label
+msgid "Password"
+msgstr "Clave"
+
+#: NodeType_psihost:field_pass_help
+msgid "User password that can call commands."
+msgstr "Clave de usuario que puede llamar comandos."
+
+#: NodeType_psihost:field_user_label
+msgid "User"
+msgstr "Usuario"
+
+#: NodeType_psihost:field_user_help
+msgid "User name that can call commands."
+msgstr "Nombre del usuario que puede llamar comandos."
+
+#: NodeType_psihost:field_url_help
+msgid "Pharinix host's url with phpSysInfo installed."
+msgstr "Url de host de Pharinix win phpSysInfo instalado."
+
+#: NodeType_psihost:field_modifier_label
+msgid "Modifier user"
+msgstr "Usuario modificador"
+
+#: NodeType_psihost:field_modified_label
+msgid "Modified date"
+msgstr "Fecha de modificación"
+
+#: NodeType_psihost:field_creator_label
+msgid "User creator"
+msgstr "Usuario creador"
+
+#: NodeType_psihost:field_created_label
+msgid "Creation date"
+msgstr "Fecha de creación"
+
+#: NodeType_psihost:field_access_label
+msgid "Access"
+msgstr "Acceso"
+
+#: NodeType_psihost:field_access_help
+msgid "Access control flags."
+msgstr "Banderas de control de acceso."
+
+#: NodeType_psihost:field_group_owner_label
+msgid "Group"
+msgstr "Grupo"
+
+#: NodeType_psihost:field_group_owner_help
+msgid "Owner group"
+msgstr "Grupo propietario"
+
+#: NodeType_psihost:field_user_owner_label
+msgid "Owner"
+msgstr "Propietario"
+
+#: NodeType_psihost:field_user_owner_help
+msgid "Owner user"
+msgstr "Usuario propietario"
