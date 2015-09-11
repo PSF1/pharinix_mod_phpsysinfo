@@ -116,7 +116,8 @@ if (!class_exists("commandPSIInfo")) {
                     "response" => array(
                         "errors" => "array",
                     ),
-                )
+                ),
+                "echo" => false
             );
         }
         

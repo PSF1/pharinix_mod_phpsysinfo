@@ -92,7 +92,8 @@ if (!class_exists("commandPSIBlock")) {
                 "type" => array(
                     "parameters" => array(), 
                     "response" => array(),
-                )
+                ),
+                "echo" => true
             );
         }
         

@@ -83,7 +83,8 @@ if (!class_exists("commandPSIDelHost")) {
                         'ok' => 'boolean',
                         'trace' => 'array',
                     ),
-                )
+                ),
+                "echo" => false
             );
         }
         

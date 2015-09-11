@@ -76,7 +76,8 @@ if (!class_exists("commandPSIAddHost")) {
                         "pass" => 'string',
                     ), 
                     "response" => array(),
-                )
+                ),
+                "echo" => false
             );
         }
         

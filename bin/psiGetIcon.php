@@ -69,7 +69,8 @@ if (!class_exists("commandPSIGetIcon")) {
                         "file" => "string",
                     ), 
                     "response" => array(),
-                )
+                ),
+                "echo" => true
             );
         }
         
