@@ -33,16 +33,7 @@ if (!class_exists("commandPSIBlock")) {
     class commandPSIBlock extends driverCommand {
 
         public static function runMe(&$params, $debug = true) {
-            $path = driverCommand::run('modGetPath', array(
-                'name' => 'raphael_js'
-            ));
-            $path = $path['path'];
-            if ($path == '') {
-                return array('ok' => false, 'msg' => __("Module 'raphael_js' is required."));
-            }
-            echo '<link href="'.CMS_DEFAULT_URL_BASE.$path.'morrisjs/morris.css" rel="stylesheet">';
-            echo '<script src="'.CMS_DEFAULT_URL_BASE.$path.'raphael-min.js" type="text/javascript"></script>';
-            echo '<script src="'.CMS_DEFAULT_URL_BASE.$path.'morrisjs/morris.min.js" type="text/javascript"></script>';
+            driverCommand::run('incRaphaelJS');
             $path = driverCommand::run('modGetPath', array(
                 'name' => 'phpsysinfo'
             ));
