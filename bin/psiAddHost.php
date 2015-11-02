@@ -54,6 +54,12 @@ if (!class_exists("commandPSIAddHost")) {
                 return $resp;
             }
             
+            $defGroup = driverConfig::getCFG()->getSection('[phpsysinfo]')->get('default_group');
+            driverCommand::run('chownNode', array(
+                'nodetype' => 'psihost',
+                'nid' => $resp['nid'],
+                'group' => $defGroup,
+            ));
             return array('ok' => true);
         }
 
