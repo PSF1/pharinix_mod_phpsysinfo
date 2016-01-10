@@ -2,7 +2,7 @@
     "meta":{
         "name":"phpSysInfo v 3.2.2",
         "slugname":"phpsysinfo",
-        "version": "1.6",
+        "version": "1.7",
         "autor": "Copyright (c), 1999-2008, Uriah Welcome (precision@users.sf.net)\nCopyright (c), 1999-2009, Michael Cramer (bigmichi1@users.sf.net)\nCopyright (c), 2007-2008, Audun Larsen (xqus@users.sf.net)\nCopyright (c), 2007-2015, Erkan Valentin\nCopyright (c), 2009-2015, Mieczyslaw Nalewaj (namiltd@users.sf.net)\nCopyright (c), 2010-2012, Damien Roth (iysaak@users.sf.net)\nPharinix mod Copyright (c), 2015, Pedro Pelaez (aaaaa976@gmail.com)",
         "website": "https://github.com/PSF1/pharinix_mod_phpsysinfo",
         "description": "phpSysInfo: a customizable PHP script that displays information about your system nicely",
@@ -71,6 +71,43 @@
             {
                 "nodetype":"psihost",
                 "name":"title"
+            }
+        },
+        {"addPage":
+            {
+                "name":"admin/status",
+                "template":"etc/templates/pages/default.xml",
+                "title":"Server status",
+                "url":"admin/status"
+            }
+        },
+        {"addBlockToPage":
+            {
+                "page":"admin/status",
+                "idcol":"content",
+                "cmd":"psiBlock",
+                "parameters":"",
+                "priority":0
+            }
+        },
+        {"mnuAdd":
+            {
+                "slugname":"server_status",
+                "isbrand": false,
+                "isnotsudoed":true,
+                "isnotloged":false,
+                "havegroup":"phpsysinfo",
+                "issudoed":true,
+                "linkto":"admin/status",
+                "parent":"main_help",
+                "title":"Server status",
+                "isloged":true,
+                "params":"",
+                "cmd":"",
+                "opennew":false,
+                "onlyparent":false,
+                "order":25,
+                "aling":"left"
             }
         }
     ],
