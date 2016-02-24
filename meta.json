@@ -27,7 +27,7 @@
                 "locked":false,
                 "readOnly":false,
                 "system":false,
-                "multivalued":false,
+                "multi":false,
                 "default":"",
                 "label":"Host",
                 "help":"Pharinix host's url with phpSysInfo installed."
@@ -40,7 +40,7 @@
                 "locked":false,
                 "readOnly":false,
                 "system":false,
-                "multivalued":false,
+                "multi":false,
                 "default":"",
                 "label":"User",
                 "help":"User name that can call commands."
@@ -53,7 +53,7 @@
                 "locked":false,
                 "readOnly":false,
                 "system":false,
-                "multivalued":false,
+                "multi":false,
                 "default":"",
                 "label":"Password",
                 "help":"User password that can call commands."
