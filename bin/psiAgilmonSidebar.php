@@ -48,6 +48,7 @@ if (!class_exists("commandPSIAgilmonSidebar")) {
             $hosts = driverCommand::run('getNodes', array(
                 'nodetype' => 'psihost',
                 'fields' => 'title',
+                'order' => '`title` ASC',
             ));
             
             echo '<div class="row">';
