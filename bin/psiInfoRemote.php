@@ -22,76 +22,66 @@
  * @category  PHP
  * @package   phpsysinfo
  * @author    Pedro Pelaez <aaaaa976@gmail.com>
- * @copyright 2015 Pharinix
+ * @copyright 2016 Pharinix
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link      http://phpsysinfo.sourceforge.net
  */
 
 if (!defined("CMS_VERSION")) { header("HTTP/1.0 404 Not Found"); die(""); }
 
-if (!class_exists("commandPSIInfo")) {
-    class commandPSIInfo extends driverCommand {
+if (!class_exists("commandPsiInfoRemote")) {
+    class commandPsiInfoRemote extends driverCommand {
 
         public static function runMe(&$params, $debug = true) {
             $params = array_merge(array(
+                'hostid' => 0,
                 'plugin' => '',
                 'filters' => '',
             ), $params);
-            header('Access-Control-Allow-Origin: *');
+//            header('Access-Control-Allow-Origin: *');
              /**
              * application root path
              *
              * @var string
              */
-            $path = driverCommand::run('modGetPath', array(
-                'name' => 'phpsysinfo'
+            $path = driverCommand::getModPath('phpsysinfo');
+            include_once $path.'drivers/psiTools.php';
+            
+            $host = driverCommand::run('getNode', array(
+                'nodetype' => 'psihost',
+                'node' => $params['hostid'],
             ));
-            $path = $path['path'];
-            if ($path == '') {
-                return array('ok' => false, 'msg' => __('Uh!! What??'));
+            if (empty($host)) {
+                return array('ok' => false, 'msg' => __('Host not found'));
             }
-            if (!defined('APP_ROOT')) define('APP_ROOT', $path.'drivers/');
-
-            /**
-             * internal xml or external
-             * external is needed when running in static mode
-             *
-             * @var boolean
-             */
-            if (!defined('PSI_INTERNAL_XML')) define('PSI_INTERNAL_XML', true);
-
-            require_once APP_ROOT.'/includes/autoloader.inc.php';
-
-            // check what xml part should be generated
-            if ($params['plugin'] != '') {
-                $plugin = basename(htmlspecialchars($params['plugin']));
-                if ($plugin == "complete") {
-                    $output = new WebpageStdClass(true, null);
-                } elseif ($plugin != "") {
-                    $output = new WebpageStdClass(false, $plugin);
-                } else {
-                    unset($output);
-                }
-            } else {
-                $output = new WebpageStdClass(false, null);
+            $host = $host[$params['hostid']];
+            $pass = driverPSITools::decriptPass($host['pass']);
+            // Call to remote API
+            $session  = driverPSITools::apiCall($host['url'], array(
+                'command' => 'startSession',
+                'interface' => 'echoJson',
+                'user' => $host['user'],
+                'pass' => $pass,
+            ));
+            if ($session['body'] === false) {
+                return array('ok' => false, 'msg' => __('Connection error.'));
             }
-            if (!$output->existError()) {
-//                include_once 'usr/xml2array/xml2array.php';
-//                $respXML = $output->getXMLString();
-//                $resp = xml_string_to_array($respXML);
-//                return $resp;
-                $filters = null;
-                if ($params['filters'] != '') {
-                    $filters = new stdClass();
-                    $aFilters = explode(",", $params['filters']);
-                    foreach($aFilters as $filter) {
-                        $filter = trim($filter);
-                        $filters->$filter = true;
-                    }
-                }
-                return array('data' => $output->getObject($filters));
+            $session = json_decode($session['body']);
+            if (!isset($session->ok) || $session->ok === false) {
+                return array('ok' => false, 'msg' => __('Remote authentication error.'));
+            }
+            $data = driverPSITools::apiCall($host['url'], array(
+                'auth_token' => $session->id,
+                'command' => 'psiInfo',
+                'interface' => 'echoJson',
+                'plugin' => $params['plugin'],
+                'filters' => $params['filters'],
+            ));
+            $data = json_decode($data['body']);
+            if (isset($data->errors)) {
+                return array('errors' => $data->errors);
             } else {
-                return array('errors' => $output->getErrorArray());
+                return array('data' => $data->data);
             }
         }
 
@@ -100,8 +90,9 @@ if (!class_exists("commandPSIInfo")) {
             $path = $path['path'].'drivers/phpsysinfo.ini';
             return array(
                 "package" => 'phpsysinfo',
-                "description" => __("Retrieve system information. If phpSysInfo get on error then return a array in 'errors'."), 
+                "description" => __("Retrieve system information from remote Pharinix. If phpSysInfo get on error then return a array in 'errors'."), 
                 "parameters" => array(
+                        "hostid" => __('Local PSI Host ID.'),
                         "plugin" => sprintf(__("Plugin to use. See '%s'"), $path),
                         "filters" => __("Comma separated list of sections to show or not. To show all sections set to '', empty (default). In case-sensitive each section name can be: Vitals, Network, Hardware, Memory, Filesystems, Mbinfo, Upsinfo.'"),
                     ), 
@@ -110,6 +101,7 @@ if (!class_exists("commandPSIInfo")) {
                     ),
                 "type" => array(
                     "parameters" => array(
+                        "hostid" => "integer",
                         "plugin" => "string",
                         "filters" => "string",
                     ), 
@@ -129,6 +121,20 @@ if (!class_exists("commandPSIInfo")) {
         public static function getAccessFlags() {
             return driverUser::PERMISSION_FILE_GROUP_EXECUTE;
         }
+        
+        public static function getAccessData($path = "") {
+            $me = __FILE__;
+            $resp = parent::getAccessData($me);
+            if ($resp["group"] == 0) {
+                $defGroup = driverConfig::getCFG()->getSection('[phpsysinfo]')->get('default_group');
+                $sql = "select `id` from `node_group` where `title` = '$defGroup'";
+                $q = dbConn::Execute($sql);
+                if (!$q->EOF) {
+                    $resp["group"] = $q->fields["id"];
+                }
+            }
+            return $resp;
+        }
     }
 }
-return new commandPSIInfo();
+return new commandPsiInfoRemote();

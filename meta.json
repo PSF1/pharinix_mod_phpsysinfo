@@ -10,7 +10,8 @@
     },
     "configuration": {
         "[phpsysinfo]": {
-            "default_group":"'phpsysinfo'"
+            "default_group":"'phpsysinfo'",
+            "passwords_salt":""
         }
     },
     "booting": [],
@@ -67,12 +68,6 @@
                 "group":"phpsysinfo"
             }
         },
-        {"delNodeField":
-            {
-                "nodetype":"psihost",
-                "name":"title"
-            }
-        },
         {"addPage":
             {
                 "name":"admin/status",
@@ -90,23 +85,51 @@
                 "priority":0
             }
         },
+        {"addPage":
+            {
+                "name":"psiRootPanel",
+                "template":"etc/templates/pages/two_column.xml",
+                "title":"AgilMon Remote Manager",
+                "url":"admin/agilmon"
+            }
+        },
         {"mnuAdd":
             {
                 "slugname":"server_status",
-                "isbrand": false,
-                "isnotsudoed":true,
-                "isnotloged":false,
+                "isbrand": 0,
+                "isnotsudoed":1,
+                "isnotloged":0,
                 "havegroup":"phpsysinfo",
-                "issudoed":true,
+                "issudoed":1,
                 "linkto":"admin/status",
                 "parent":"main_help",
                 "title":"Server status",
-                "isloged":true,
+                "isloged":1,
                 "params":"",
                 "cmd":"",
-                "opennew":false,
-                "onlyparent":false,
+                "opennew":0,
+                "onlyparent":0,
                 "order":25,
+                "aling":"left"
+            }
+        },
+        {"mnuAdd":
+            {
+                "slugname":"agilmon_remote_manager",
+                "isbrand": 0,
+                "isnotsudoed":0,
+                "isnotloged":0,
+                "havegroup":"phpsysinfo",
+                "issudoed":1,
+                "linkto":"admin/agilmon",
+                "parent":"main_help",
+                "title":"AgilMon Remote Manager",
+                "isloged":1,
+                "params":"",
+                "cmd":"",
+                "opennew":0,
+                "onlyparent":0,
+                "order":30,
                 "aling":"left"
             }
         }
@@ -114,7 +137,11 @@
     "uninstall": [],
     "requirements": {
         "pharinix": "2.x.x",
-        "raphael_js": "2.1.4"
+        "raphael_js": "2.1.4",
+        "pharinix_mod_drag_drop": "1.0.0",
+        "pharinix_mod_bootstrap_modal": "2.2.6",
+        "pharinix_mod_bootstrap3_dialog": "1.0.x",
+        "pharinix_mod_bootstrapvalidator": "0.5.2",
     },
     "platforms":[
         "win",

@@ -22,77 +22,69 @@
  * @category  PHP
  * @package   phpsysinfo
  * @author    Pedro Pelaez <aaaaa976@gmail.com>
- * @copyright 2015 Pharinix
+ * @copyright 2016 Pharinix
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link      http://phpsysinfo.sourceforge.net
  */
 
 if (!defined("CMS_VERSION")) { header("HTTP/1.0 404 Not Found"); die(""); }
 
-if (!class_exists("commandPSIAddHost")) {
-    class commandPSIAddHost extends driverCommand {
+if (!class_exists("commandPSIPingRemote")) {
+    class commandPSIPingRemote extends driverCommand {
 
         public static function runMe(&$params, $debug = true) {
             $params = array_merge(array(
-                "title" => '',
-                "url" => '',
-                "user" => '',
-                "pass" => '',
+                'hostid' => 0,
             ), $params);
-            
+//            header('Access-Control-Allow-Origin: *');
+             /**
+             * application root path
+             *
+             * @var string
+             */
             $path = driverCommand::getModPath('phpsysinfo');
             include_once $path.'drivers/psiTools.php';
             
-            if ($params['url'] == '') {
-                return array('ok' => false, 'msg' => __('URL is required.'));
-            }
-            
-            if (!driverTools::str_end('/', $params['url'])) {
-                $params['url'] .= '/';
-            }
-            
-            $resp = driverCommand::run('addNode', array(
+            $host = driverCommand::run('getNode', array(
                 'nodetype' => 'psihost',
-                'title' => $params['title'],
-                'url' => $params['url'],
-                'user' => $params['user'],
-                'pass' => driverPSITools::encriptPass($params['pass']), // Add a bit of protection
+                'node' => $params['hostid'],
             ));
-            
-            if (isset($resp['ok']) && $resp['ok'] === FALSE) {
-                return $resp;
+            if (empty($host)) {
+                return array('ok' => false, 'msg' => __('Host not found'));
             }
-            
-            $defGroup = driverConfig::getCfgValue('[phpsysinfo]', 'default_group', "phpsysinfo");
-            driverCommand::run('chownNode', array(
-                'nodetype' => 'psihost',
-                'nid' => $resp['nid'],
-                'group' => $defGroup,
-            ));
-            return array('ok' => true);
+            $host = $host[$params['hostid']];
+//            $pass = driverPSITools::decriptPass($host['pass']);
+            // Call to remote API
+            $start = microtime(true);
+            $ping = driverPSITools::apiCall($host['url'], array(
+                'command' => 'nothing',
+                'interface' => 'nothing',
+            ),true, false, null, 10);
+            if ($ping['request']['http_code'] != 200) {
+                return array('ok' => false, 'msg' => __('Connection error.'));
+            }
+            return array('ok' => true, 'secs' => microtime(true) - $start);
         }
 
         public static function getHelp() {
-//            $path = driverCommand::run('modGetPath', array('name' => 'phpsysinfo'));
-//            $path = $path['path'];
+            $path = driverCommand::run('modGetPath', array('name' => 'phpsysinfo'));
+            $path = $path['path'].'drivers/phpsysinfo.ini';
             return array(
                 "package" => 'phpsysinfo',
-                "description" => __("Add a new Pharinix host to host's list, node type 'psihost'."), 
+                "description" => __("Do a ping to a remote host."), 
                 "parameters" => array(
-                        "title" => __("Host label."),
-                        "url" => __("Pharinix host's URL."),
-                        "user" => __("Username."),
-                        "pass" => __("Password."),
+                        "hostid" => __('Local PSI Host ID.'),
                     ), 
-                "response" => array(),
+                "response" => array(
+                    "secs" => __('Query delay in seconds'),
+                ),
                 "type" => array(
                     "parameters" => array(
-                        "title" => 'string',
-                        "url" => 'string',
-                        "user" => 'string',
-                        "pass" => 'string',
+                        "hostid" => "integer",
                     ), 
-                    "response" => array(),
+                    "response" => array(
+                        "secs" => "integer",
+                    ),
                 ),
                 "echo" => false
             );
@@ -122,4 +114,4 @@ if (!class_exists("commandPSIAddHost")) {
         }
     }
 }
-return new commandPSIAddHost();
+return new commandPSIPingRemote();

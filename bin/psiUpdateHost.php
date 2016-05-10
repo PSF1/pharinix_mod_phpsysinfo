@@ -29,46 +29,52 @@
 
 if (!defined("CMS_VERSION")) { header("HTTP/1.0 404 Not Found"); die(""); }
 
-if (!class_exists("commandPSIAddHost")) {
-    class commandPSIAddHost extends driverCommand {
+if (!class_exists("commandPSIUpdateHost")) {
+    class commandPSIUpdateHost extends driverCommand {
 
         public static function runMe(&$params, $debug = true) {
             $params = array_merge(array(
-                "title" => '',
-                "url" => '',
-                "user" => '',
-                "pass" => '',
+                "id" => 0,
+                "title" => null,
+                "url" => null,
+                "user" => null,
+                "pass" => null,
             ), $params);
             
             $path = driverCommand::getModPath('phpsysinfo');
             include_once $path.'drivers/psiTools.php';
             
-            if ($params['url'] == '') {
+            if ($params['id'] == 0) {
+                return array('ok' => false, 'msg' => __('ID is required.'));
+            }
+            
+            if ($params['title'] != null && $params['title'] == '') {
+                return array('ok' => false, 'msg' => __('Title is required.'));
+            }
+            
+            if ($params['url'] != null && $params['url'] == '') {
                 return array('ok' => false, 'msg' => __('URL is required.'));
             }
             
-            if (!driverTools::str_end('/', $params['url'])) {
+            if ($params['url'] != null && !driverTools::str_end('/', $params['url'])) {
                 $params['url'] .= '/';
             }
-            
-            $resp = driverCommand::run('addNode', array(
+            $up = array(
                 'nodetype' => 'psihost',
-                'title' => $params['title'],
-                'url' => $params['url'],
-                'user' => $params['user'],
-                'pass' => driverPSITools::encriptPass($params['pass']), // Add a bit of protection
-            ));
+                'nid' => $params['id'],
+            );
+            if ($params['title'] != null) $up['title'] = $params['title'];
+            if ($params['url'] != null) $up['url'] = $params['url'];
+            if ($params['user'] != null) $up['user'] = $params['user'];
+            if ($params['pass'] != null) $up['pass'] = driverPSITools::encriptPass($params['pass']); // Add a bit of protection
+            if (count($up) <= 2) {
+                return array('ok' => false, 'msg' => __('Nothing to update.'));
+            }
+            $resp = driverCommand::run('updateNode', $up);
             
             if (isset($resp['ok']) && $resp['ok'] === FALSE) {
                 return $resp;
             }
-            
-            $defGroup = driverConfig::getCfgValue('[phpsysinfo]', 'default_group', "phpsysinfo");
-            driverCommand::run('chownNode', array(
-                'nodetype' => 'psihost',
-                'nid' => $resp['nid'],
-                'group' => $defGroup,
-            ));
             return array('ok' => true);
         }
 
@@ -77,8 +83,9 @@ if (!class_exists("commandPSIAddHost")) {
 //            $path = $path['path'];
             return array(
                 "package" => 'phpsysinfo',
-                "description" => __("Add a new Pharinix host to host's list, node type 'psihost'."), 
+                "description" => __("Update a Pharinix host in host's list."), 
                 "parameters" => array(
+                        "id" => __("Host id."),
                         "title" => __("Host label."),
                         "url" => __("Pharinix host's URL."),
                         "user" => __("Username."),
@@ -87,6 +94,7 @@ if (!class_exists("commandPSIAddHost")) {
                 "response" => array(),
                 "type" => array(
                     "parameters" => array(
+                        "id" => 'integer',
                         "title" => 'string',
                         "url" => 'string',
                         "user" => 'string',
@@ -122,4 +130,4 @@ if (!class_exists("commandPSIAddHost")) {
         }
     }
 }
-return new commandPSIAddHost();
+return new commandPSIUpdateHost();

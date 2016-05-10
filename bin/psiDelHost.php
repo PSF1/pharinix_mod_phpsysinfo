@@ -34,17 +34,16 @@ if (!class_exists("commandPSIDelHost")) {
 
         public static function runMe(&$params, $debug = true) {
             $params = array_merge(array(
-                "url" => '',
+                "id" => null,
             ), $params);
             
-            if ($params['url'] == '') {
-                return array('ok' => false, 'msg' => __('URL is required.'));
+            if ($params['id'] == null) {
+                return array('ok' => false, 'msg' => __('Host ID is required.'));
             }
             
-            $test = driverCommand::run('getNodes', array(
+            $test = driverCommand::run('getNode', array(
                 'nodetype' => 'psihost',
-                'fields' => '`id`',
-                'where' => "`url` = '{$params['url']}'",
+                'node' => $params['id'],
             ));
             
             if (isset($test['ok']) && $test['ok'] === FALSE) {
@@ -52,12 +51,11 @@ if (!class_exists("commandPSIDelHost")) {
             }
             
             $resp = array();
-            foreach($test as $id => $node) {
-                $resp[] = driverCommand::run('delNode', array(
-                    'nodetype' => 'psihost',
-                    'nid' => $id
-                ));
-            }
+            // Delete Host node
+            $resp[] = driverCommand::run('delNode', array(
+                'nodetype' => 'psihost',
+                'nid' => $params['id']
+            ));
             
             return array('ok' => true, 'trace' => $resp);
         }
@@ -67,9 +65,9 @@ if (!class_exists("commandPSIDelHost")) {
             $path = $path['path'];
             return array(
                 "package" => 'phpsysinfo',
-                "description" => __("Delete a Pharinix host to host's list."), 
+                "description" => __("Delete a Pharinix host from host's list."), 
                 "parameters" => array(
-                        "url" => __("Pharinix host's URL."),
+                        "id" => __("Pharinix host ID."),
                     ), 
                 "response" => array(
                     'ok' => __('TRUE if ok.'),
@@ -77,7 +75,7 @@ if (!class_exists("commandPSIDelHost")) {
                 ),
                 "type" => array(
                     "parameters" => array(
-                        "url" => 'string',
+                        "id" => 'string',
                     ), 
                     "response" => array(
                         'ok' => 'boolean',
