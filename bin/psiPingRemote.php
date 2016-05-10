@@ -61,7 +61,7 @@ if (!class_exists("commandPSIPingRemote")) {
                 'interface' => 'nothing',
             ),true, false, null, 10);
             if ($ping['request']['http_code'] != 200) {
-                return array('ok' => false, 'msg' => __('Connection error.'));
+                return array('ok' => false, 'msg' => __('Connection error.').' '.$ping['error']);
             }
             return array('ok' => true, 'secs' => microtime(true) - $start);
         }
