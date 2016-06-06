@@ -141,7 +141,7 @@
         "pharinix_mod_drag_drop": "1.0.0",
         "pharinix_mod_bootstrap_modal": "2.2.6",
         "pharinix_mod_bootstrap3_dialog": "1.0.x",
-        "pharinix_mod_bootstrapvalidator": "0.5.2",
+        "pharinix_mod_bootstrapvalidator": "0.5.2"
     },
     "platforms":[
         "win",
