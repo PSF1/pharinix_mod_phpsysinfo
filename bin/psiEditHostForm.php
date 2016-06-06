@@ -29,70 +29,100 @@ if (!class_exists("commandsiEditHostForm")) {
             $fid = "frm".str_replace(".", "", $fid["id"]);
             driverCommand::run('incDualListbox');
             driverCommand::run('incFormValidator');
-            ?>
-<div class="modal-body">
-	<ul class="nav nav-tabs">
-		<li class="active"><a href="#tab1" data-toggle="tab"><?php __e('General');?></a></li>
-	</ul>
-	<div class="tab-content">
-		<div class="tab-pane active" id="tab1">
-                    <form class="form-horizontal" id="<?php echo $fid;?>" host="<?php echo $params["id"];?>">
-                    <fieldset>
-                        <p>&nbsp;</p>
-                    <!-- Text input-->
-                    <div class="form-group">
-                      <label class="col-md-4 control-label" for="txtLabel"><?php __e('Label'); ?></label>  
-                      <div class="col-md-8">
-                      <input id="txtLabel" name="txtLabel" 
-                             value ="<?php echo $host[$params["id"]]["title"]; ?>"
-                             type="text" 
-                             placeholder="<?php __e('Label'); ?>" 
-                             class="form-control input-md" required="">
-                      </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                      <label class="col-md-4 control-label" for="txtURL"><?php __e('URL'); ?></label>  
-                      <div class="col-md-8">
-                      <input id="txtURL" name="txtURL" 
-                             value ="<?php echo $host[$params["id"]]["url"]; ?>"
-                             type="text" 
-                             placeholder="<?php __e('http://www.example.com/'); ?>" 
-                             class="form-control input-md" required="">
-                      </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                      <label class="col-md-4 control-label" for="txtUser"><?php __e('User'); ?></label>  
-                      <div class="col-md-8">
-                      <input id="txtUser" name="txtUser"
-                             value ="<?php echo $host[$params["id"]]["user"]; ?>" 
-                             type="text" 
-                             placeholder="<?php __e('User'); ?>" 
-                             class="form-control input-md">
-                      </div>
-                    </div>
-
-                    <!-- Password input-->
-                    <div class="form-group">
-                      <label class="col-md-4 control-label" for="txtPass1"><?php __e('Password'); ?></label>
-                      <div class="col-md-8">
-                        <input id="txtPass1" name="txtPass1"
-                             type="password" 
-                             placeholder="<?php __e('Password');?>" 
-                             class="form-control input-md">
-                        <span class="help-block"><?php __e('The password will be encripted.'); ?></span>
-                      </div>
-                    </div>
-
-                    </fieldset>
-                    </form>
-                </div>
-	</div>
-</div>
-<?php
+            // Default tabs
+            $tabs = array(
+                'tabGeneral' => array(
+                    'active' => true,
+                    'label' => __('General'),
+                    'html_form' => '<form class="form-horizontal" id="'.$fid.'" host="'.$params["id"].'">'.
+                    '<fieldset>'.
+                        '<p>&nbsp;</p>'.
+                        '<!-- Text input-->'.
+                        '<div class="form-group">'.
+                        '<label class="col-md-4 control-label" for="txtLabel">'.__('Label').'</label>'.
+                        '<div class="col-md-8">'.
+                        '<input id="txtLabel" name="txtLabel" '.
+                            'value ="'.$host[$params["id"]]["title"].'" '.
+                            'type="text" '.
+                            'placeholder="'.__('Label').'" '.
+                            'class="form-control input-md" required="">'.
+                        '</div>'.
+                    '</div>'.
+                    '<!-- Text input-->'.
+                    '<div class="form-group">'.
+                        '<label class="col-md-4 control-label" for="txtURL">'.__('URL').'</label>'.
+                    '<div class="col-md-8">'.
+                        '<input id="txtURL" name="txtURL" '.
+                            'value ="'.$host[$params["id"]]["url"].'" '.
+                            'type="text" '.
+                            'placeholder="'.__('http://www.example.com/').'"'.
+                            'class="form-control input-md" required="">'.
+                    '</div>'.
+                    '</div>'.
+                    '<!-- Text input-->'.
+                    '<div class="form-group">'.
+                        '<label class="col-md-4 control-label" for="txtUser">'.__('User').'</label>'.
+                        '<div class="col-md-8">'.
+                        '<input id="txtUser" name="txtUser" '.
+                            'value ="'.$host[$params["id"]]["user"].'" '.
+                            'type="text" '.
+                            'placeholder="'.__('User').'" '.
+                            'class="form-control input-md">'.
+                        '</div>'.
+                    '</div>'.
+                    '<!-- Password input-->'.
+                    '<div class="form-group">'.
+                        '<label class="col-md-4 control-label" for="txtPass1">'.__('Password').'</label>'.
+                        '<div class="col-md-8">'.
+                            '<input id="txtPass1" name="txtPass1" '.
+                                'type="password" '.
+                                'placeholder="'.__('Password').'" '.
+                                'class="form-control input-md">'.
+                            '<span class="help-block">'.__('The password will be encripted.').'</span>'.
+                        '</div>'.
+                    '</div>'.
+                    '</fieldset>'.
+                    '</form>',
+                )
+            );
+            // Allow override and expand form tabs
+            driverHook::CallHook('psiEditHostFormTabsHook', array(
+                'tabs' => &$tabs,
+                'host' => &$host[$params["id"]],
+                'formId' => $fid,
+            ));
+            // We verify that we only have one default tab
+            $tabActive = '';
+            // Get first active tab
+            foreach($tabs as $tabId => $tabInfo) {
+                if ($tabInfo['active']) {
+                    $tabActive = $tabId;
+                    break;
+                }
+            }
+            // We ensure that we have only one active tab
+            foreach($tabs as $tabId => $tabInfo) {
+                if ($tabId == $tabActive) {
+                    $tabInfo['active'] = true;
+                } else {
+                    $tabInfo['active'] = false;
+                }
+            }
+            echo '<div class="modal-body">'."\n";
+            echo '<ul class="nav nav-tabs">'."\n";
+            foreach($tabs as $tabId => $tabInfo) {
+                echo '<li class="'.($tabInfo['active']?'active':'').'"><a href="#'.$tabId.'" data-toggle="tab">'.$tabInfo['label'].'</a></li>'."\n";
+            }
+            echo '</ul>'."\n";
+            
+            echo '<div class="tab-content">'."\n";
+            foreach($tabs as $tabId => $tabInfo) {
+                echo '<div class="tab-pane '.($tabInfo['active']?'active':'').'" id="'.$tabId.'">'."\n";
+                echo $tabInfo['html_form']."\n";
+                echo '</div>'."\n";
+            }
+            echo '</div>'."\n";
+            echo '</div>'."\n";
         }
 ?>
 <div class="modal-footer">
@@ -122,7 +152,18 @@ if (!class_exists("commandsiEditHostForm")) {
                     ), 
                     "response" => array(),
                 ),
-                "echo" => true
+                "echo" => true,
+                "hooks" => array(
+                        array(
+                            "name" => "psiEditHostFormTabsHook",
+                            "description" => __("Allow change the host edit form."),
+                            "parameters" => array(
+                                'tabs' => __("Tab definition array. array(<tab ID> => array('active' => <It's the default active tab>, 'label' => <tab label>, 'html_form' => <HTML form, without the form tag>))"),
+                                'host' => __("Host object"),
+                                'formId' => __("Form unique ID"),
+                            )
+                        )
+                    )
             );
         }
         
