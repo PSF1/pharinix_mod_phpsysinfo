@@ -21,7 +21,7 @@ if (!class_exists("commandsiEditHostForm")) {
                 "where" => "`id` = ".$params["id"],
             ), false);
         if (count($host) == 0) {
-            echo driverCommand::getAlert(__("User not found..."));
+            echo driverCommand::getAlert(__("Host not found..."));
         } else {
             //$grupos = driverCommand::run("getNodes", array("nodetype" => "group"));
             $grupos = driverNodes::getNodes(array("nodetype" => "group"), false);
